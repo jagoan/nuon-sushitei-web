@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="js/config.js"></script>
+        <script src="js/head.js"></script>
+        <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.css" rel="stylesheet">
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous" defer></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous" defer></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.js" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" defer></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
+    	<script src="js/script.js" defer></script>
+		<script src="js/page-loader.js" defer></script>
+	</head>
+    <body class="sb-nav-fixed">
+        <div data-include="components/navigation-top.html"></div>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav" data-include="components/navigation-left.html"></div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4">Museum</h1>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="table-responsive">
+									<button class="btn btn-dt-top btn-secondary btn-success datastore-publish">Publish to DataStore</button>
+                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>ID</th>
+                                                <th>Museum</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                
+            </div>
+        </div>
+
+        <div class="overlay">
+			<img src="img/loading-circle.gif"/>
+		</div>
+       
+<div class="modal fade" id="museum-edit-string" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Museum: Update Data</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label form-label">Value</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-value" placeholder="Value">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="museum-edit-text" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Museum: Update Data</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label form-label">Value</label>
+					<div class="col-sm-9">
+						<textarea id="summernote" class="form-control input-value" placeholder="Value"></textarea>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="museum-edit-file" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Museum: Update Data</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Image (PNG OR JPG)</label>
+					<div class="col-sm-9 input-file-container">
+						<input type="file" class="form-control-file input-file" placeholder="Image (PNG OR JPG)">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="password-edit" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Change Password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form autocomplete=off>
+			<div class="modal-body">				
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-5 col-form-label">Current Password *</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control input-password-current" placeholder="Current Password">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-5 col-form-label">New Password *</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control input-password" placeholder="New Password">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-5 col-form-label">Confirm Password *</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control input-password-2" placeholder="Confirm Password">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary submit-password">Submit</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+        
+    </body>
+</html>

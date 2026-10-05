@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Voucher - Convert Code</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="voucher-wrapper">
+    <!-- Top Wooden Badge Header -->
+    <div class="wood-badge">
+      <span>E-VOUCHER</span>
+    </div>
+
+    <!-- Main Container Card -->
+    <div class="voucher-card_outer1">
+      <div class="voucher-card_outer2">
+        <div class="voucher-card_outer3">
+          <div class="voucher-card">
+
+            <h2 class="card-title">Convert your digital voucher code to Sushi Tei Voucher</h2>
+
+            <!-- Input Section -->
+            <div class="input-section">
+              <div class="input-header">
+                <span>Enter your voucher code:</span>
+              </div>
+              <div class="input-body">
+                <!-- Ticket Icon -->
+                <div class="ticket-icon">
+                  <img src="img/voucher.webp" alt="Voucher Ticket">
+                </div>
+
+                <!-- Code Input Form -->
+                <div class="code-input-container">
+                  <input type="text" id="voucherCode" maxlength="6" autocomplete="off" spellcheck="false"
+                    placeholder="">
+                  <div class="code-slots" id="codeSlots">
+                    <!-- Slots generated dynamically or statically -->
+                    <span class="slot"></span>
+                    <span class="slot"></span>
+                    <span class="slot"></span>
+                    <span class="slot"></span>
+                    <span class="slot"></span>
+                    <span class="slot"></span>
+                  </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button class="submit-btn" id="btnSubmit">Submit</button>
+              </div>
+            </div>
+
+            <!-- Instruction / Info Box -->
+            <div class="info-box">
+              <div class="info-icon" id="infoBtn" title="Information">i</div>
+              <h3>How To Get Voucher Code:</h3>
+              <ol class="instructions">
+                <li>Go to <a href="#" class="highlight-link">Suteigu Kindom</a></li>
+                <li>Do the activities and quests</li>
+                <li>Claim code in game</li>
+                <li>Input the code in the field above</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Notification Toast -->
+  <div id="toast" class="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>

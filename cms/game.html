@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="js/config.js"></script>
+        <script src="js/head.js"></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous" defer></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" crossorigin="anonymous" defer></script>
+        <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" crossorigin="anonymous" defer></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js" crossorigin="anonymous" defer></script>
+    	<script src="js/script.js" defer></script>
+        <script src="js/page-loader.js" defer></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <div data-include="components/navigation-top.html"></div>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav" data-include="components/navigation-left.html"></div>
+            <div id="layoutSidenav_content">
+                <main>
+                    <div class="container-fluid">
+                        <h1 class="mt-4">Game Config</h1>
+                        <div class="card mb-4">
+                            <div class="card-body">
+                                <div class="table-responsive">
+									<button class="btn btn-dt-top btn-secondary btn-success datastore-publish">Publish to DataStore</button>
+									<div class="row mx-0"><div class="col-md-3 col-sm-4 mb-3 px-0">
+										<select id="config-filter" class="form-control border-primary bg-light">
+											<option value="" selected>Filter: Show All</option>
+											<option value="activities">Filter: Activities</option>
+											<option value="activetools">Filter: Active Tools</option>
+											<option value="supporttools">Filter: Support Tools</option>
+											<option value="premiummenu">Filter: Premium Menu</option>
+											<option value="outletstores">Filter: Outlet Stores</option>
+											<option value="restaurantdecoration">Filter: RestaurantDecoration</option>
+											<option value="dailyreward">Filter: Daily Reward</option>
+											<option value="pet">Filter: Pet</option>
+										</select>
+                          			</div></div>
+									<table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>ID</th>
+                                                <th>Category</th>
+                                                <th>Name</th>
+                                                <th>Value</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                
+            </div>
+        </div>
+
+        <div class="overlay">
+			<img src="img/loading-circle.gif"/>
+		</div>
+       
+<div class="modal fade" id="game-edit-string" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Game Config: Update Value</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Name *</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-label" placeholder="Name" disabled>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Value *</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-value" placeholder="Value">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit" value="string">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="game-edit-number" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Game Config: Update Value</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Name *</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-label" placeholder="Name" disabled>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Value *</label>
+					<div class="col-sm-9">
+						<input type="number" step="any" class="form-control input-value" placeholder="Value">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit" value="number">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="game-edit-boolean" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Game Config: Update Value</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Name *</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-label" placeholder="Name" disabled>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Value *</label>
+					<div class="col-sm-9">
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="input-radio" value="true">
+							<label class="form-check-label">
+								True
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="input-radio" value="false">
+							<label class="form-check-label">
+								False
+							</label>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit" value="boolean">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="game-edit-object-option" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Game Config: Update Value</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Name *</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-label" placeholder="Name" disabled>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Value *</label>
+					<div class="col-sm-9">
+                        <div class="input-object-container">                            
+							<!-- item option -->                            
+                        </div>
+						<button type="button" id="btn-add-option" class="btn btn-success btn-sm">
+							+ Add Option
+						</button>
+					</div>                    
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit" value="object-option">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="game-edit-object" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Game Config: Update Value</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Name *</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-label" placeholder="Name" disabled>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Value *</label>
+					<div class="col-sm-9">
+                        <div class="input-object-container">
+                            <div class="form-inline mb-2">
+                                <!-- 
+                                <select class="form-control input-object-key w-auto mr-2">
+                                    <option value="">Select Ingredient</option>
+                                    <option value="key1">Ingredient 1</option>
+                                    <option value="key2">Ingredient 2</option>
+                                </select>
+                                <input type="text" class="form-control input-object-value w-25" placeholder="Value">
+                                -->
+                            </div>
+                        </div>
+                        <button type="button" id="btn-add" class="btn btn-success btn-sm">
+                            + Add Item
+                        </button>
+					</div>                    
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit" value="object">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="game-edit-object-fixed" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Game Config: Update Value</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Name *</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-label" placeholder="Name" disabled>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Value *</label>
+					<div class="col-sm-9">
+                        <div class="input-object-container">
+                            <div class="form-inline mb-2">
+                                <!-- 
+                                <select class="form-control input-object-key w-auto mr-2">
+                                    <option value="">Select Ingredient</option>
+                                    <option value="key1">Ingredient 1</option>
+                                    <option value="key2">Ingredient 2</option>
+                                </select>
+                                <input type="text" class="form-control input-object-value w-25" placeholder="Value">
+                                -->
+                            </div>
+                        </div>
+					</div>                    
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="hidden" class="input-id">
+                <input type="hidden" class="input-name">
+				<button type="button" class="btn btn-primary submit-edit" value="object-fixed">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="password-edit" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Change Password</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form autocomplete=off>
+			<div class="modal-body">				
+				<div class="alert alert-danger alert-message"></div>
+				<div class="form-group row">
+					<label class="col-sm-5 col-form-label">Current Password *</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control input-password-current" placeholder="Current Password">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-5 col-form-label">New Password *</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control input-password" placeholder="New Password">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-5 col-form-label">Confirm Password *</label>
+					<div class="col-sm-7">
+						<input type="password" class="form-control input-password-2" placeholder="Confirm Password">
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary submit-password">Submit</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+        
+    </body>
+</html>

@@ -1,0 +1,249 @@
+.sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-nav-link-icon {
+	min-width:18px;
+	text-align:center;
+}
+
+.btn-dt-top {
+	margin:0 5px 20px 0;
+}
+
+.alert-message {
+	display:none;
+}
+
+tbody tr td:first-child span,
+tbody tr td input {
+	cursor:pointer;
+}
+
+td[class*="data-"] svg {
+	cursor:pointer;
+}
+
+td[class*="data-"] i,
+td[class*="data-"] a {
+	color:#212529;
+}
+
+td[class*="data-"] {
+	text-align:center;
+}
+
+td.image-logo .img-thumbnail {
+	max-width: 70%;
+}
+
+.square-box.photo-preview {
+	background-color:#202020;
+}
+
+.square-box {
+	padding-bottom:100%;
+	background-repeat:no-repeat;
+	background-position:center;
+}
+
+.valign-bottom {
+	margin-top:auto;
+}
+
+.label {
+	font-weight:bold;
+}
+
+.i, 
+.link {
+	cursor:pointer;
+}
+
+.link.fa-trash {
+	color:#dc3545;
+}
+
+.link-underline {
+	text-decoration:underline;
+	cursor:pointer;
+}
+
+
+/* MODAL */
+.modal {
+	overflow-y: auto !important;
+}
+
+.modal .modal-body img {
+	max-width:60%;
+	margin:0 auto 10px;
+	display: flex;
+	justify-content: center;
+}
+
+.modal tbody tr:first-child th {
+	width:180px;
+}
+
+.modal tbody td .detail-id-card img {
+	max-width:100%;
+	max-height:260px;
+}
+
+.modal tbody td .detail-report-media img,
+.modal tbody td .detail-report-media-2 img,
+.modal tbody td .detail-report-media-3 img,
+.modal tbody td .detail-reply-media img,
+.modal .media-preview img,
+.modal tbody td .detail-report-media video,
+.modal tbody td .detail-report-media-2 video,
+.modal tbody td .detail-report-media-3 video,
+.modal tbody td .detail-reply-media video,
+.modal .media-preview video {
+	max-width:100%;
+	max-height:260px;
+	margin-top:10px;
+}
+
+
+/* SUMMERNOTE */
+.note-group-select-from-files {
+  	display: none;
+}
+
+
+/* MUSEUM */
+.museum-details {
+	min-width: 900px;
+}
+
+.museum-details .museum-segment {
+	margin-bottom: 10px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #dee2e6;
+}
+
+.museum-details .museum-segment:last-child {
+	border-bottom: 0;
+	margin-bottom: 0;
+}
+
+.museum-details .museum-image {
+	display: flex;
+	align-items: end;
+	gap: 8px;
+}
+
+.museum-details label {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.museum-details label i {
+	margin-left: 8px;
+}
+
+#museum-edit-text textarea {
+	height: 250px;
+}
+
+.input-file-container {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.tooltip-inner {
+  	text-align: left !important;
+}
+
+/* CLIENT */
+.preview-client-container {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 15px;
+}
+
+.preview-image-bg {
+	background-color: #000;
+	display: inline-block;
+	margin-inline: auto;
+	padding: 10px;
+}
+
+.preview-image-bg img {
+	max-width: 100% !important;
+	margin: 0 !important;
+}
+
+.input-search-result {
+	display:none;
+	margin-top:5px;
+	padding:10px;
+	font-size:small;
+	border:1px solid #ced4da;
+	line-height:1.3;
+}
+
+.input-search-result > div {
+	margin-bottom:6px;
+}
+
+.input-search-result > div:last-child {
+	margin-bottom:0;
+}
+
+.input-search-result .link:hover {
+	text-decoration:underline;
+}
+
+
+/* CONTENT */
+#content-edit .input-value-textarea {
+	min-height:360px;
+}
+
+
+/* TABLE REPORT DETAIL - FOR REPLY WITHOUT LOGIN */
+.table-report-detail {
+	margin-top:20px;
+}
+
+.table-report-detail tbody tr:first-child th {
+	width:180px;
+}
+
+.table-report-detail tbody td .detail-report-media img,
+.table-report-detail tbody td .detail-report-media-2 img,
+.table-report-detail tbody td .detail-report-media-3 img,
+.table-report-detail tbody td .detail-reply-media img,
+.table-report-detail tbody td .detail-report-media video,
+.table-report-detail tbody td .detail-report-media-2 video,
+.table-report-detail tbody td .detail-report-media-3 video,
+.table-report-detail tbody td .detail-reply-media video {
+	max-width:100%;
+	max-height:260px;
+	margin-top:10px;
+}
+
+/* OVERLAY */
+.overlay {
+	background-color: rgba(0, 0, 0, .7);
+	height:100%;
+	width:100%;
+	position:fixed;
+	top:0;
+	z-index:2000;
+	display:none;
+}
+
+.overlay img {
+	position:absolute;
+	top:50%;
+	left:50%;
+	margin-left:-24px;
+	margin-top:-24px;
+}
+
+@media screen and (min-width: 768px) {
+	label.filter-follower {
+		margin-right:20px;
+	}
+}

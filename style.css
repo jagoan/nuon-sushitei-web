@@ -1,0 +1,371 @@
+/* CSS Reset & Global Styling */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Fredoka', 'Quicksand', sans-serif;
+}
+
+body {
+  background-color: #e0d4c6;
+  background-image: url('img/bg.webp');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Outer Wrapper for positioning Header Badge over Main Card */
+.voucher-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  margin-top: 25px;
+}
+
+/* Top Wooden Header Badge */
+.wood-badge {
+  position: absolute;
+  top: -36px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  width: 270px;
+  aspect-ratio: 308 / 85;
+  background-image: url('img/title.webp');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+.wood-badge span {
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-shadow: 1px 2px 3px rgba(0, 0, 0, 0.7), 0 1px 2px #3d1c07;
+  display: block;
+}
+
+/* Main Outer Wooden Card Frame */
+.voucher-card_outer1 {
+  background: #EACFAB;
+  background: linear-gradient(180deg, rgba(234, 207, 171, 1) 0%, rgba(188, 138, 100, 1) 22%, rgba(188, 138, 100, 1) 77%, rgba(154, 110, 70, 1) 100%);
+  border-radius: 54px;
+  padding: 2px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+}
+
+.voucher-card_outer2 {
+  background: #DAB081;
+  background: linear-gradient(180deg, rgba(218, 176, 129, 1) 0%, rgba(168, 126, 81, 1) 100%);
+  border-radius: 52px;
+  padding: 10px;
+}
+
+.voucher-card_outer3 {
+  background: #9A6E46;
+  background: linear-gradient(180deg, rgba(154, 110, 70, 1) 0%, rgba(188, 138, 100, 1) 23%, rgba(197, 161, 123, 1) 78%, rgba(234, 207, 171, 1) 100%);
+  border-radius: 42px;
+  padding: 2px;
+}
+
+.voucher-card {
+  background-color: #f7ede2;
+  /* Seigaiha Japanese Wave Pattern SVG */
+  background-image: url('img/bg_pattern.webp');
+  background-repeat: repeat;
+  border-radius: 40px;
+  padding: 45px 35px 30px 35px;
+  box-shadow: inset 0 0px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Main Card Title */
+.card-title {
+  color: #3e2723;
+  text-align: center;
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 22px;
+}
+
+/* Input Section Container */
+.input-section {
+  background-color: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12), inset 0 0 8px rgba(0, 0, 0, 0.05);
+  border: 2px solid #e2d3c2;
+  margin-bottom: 25px;
+}
+
+.input-header {
+  background-color: #439257;
+  background: linear-gradient(180deg, #4f9f63 0%, #3a824d 100%);
+  padding: 8px 15px;
+  text-align: center;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.input-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  gap: 15px;
+  position: relative;
+}
+
+/* Ticket Icon CSS */
+.ticket-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 52px;
+}
+
+.ticket-icon img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15));
+}
+
+/* Interactive Code Input Display */
+.code-input-container {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+#voucherCode {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 2;
+  font-size: 24px;
+  text-align: center;
+}
+
+.code-slots {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.slot {
+  font-size: 28px;
+  font-weight: 700;
+  color: #2d6a3f;
+  width: 24px;
+  text-align: center;
+  border-bottom: 3px solid #cccdce;
+  height: 38px;
+  line-height: 34px;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.slot.active {
+  border-bottom-color: #3a824d;
+}
+
+.slot.has-char {
+  border-bottom-color: #cccdce;
+}
+
+/* Caret Cursor Effect */
+.slot.caret::after {
+  content: '|';
+  position: absolute;
+  left: -4px;
+  top: -2px;
+  color: #333;
+  font-weight: 300;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Submit Button */
+.submit-btn {
+  background: linear-gradient(180deg, #ffa726 0%, #f57c00 100%);
+  border: 2px solid #e65100;
+  border-bottom-color: #b71c1c;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 10px 32px;
+  border-radius: 18px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25), inset 0 2px 2px rgba(255, 255, 255, 0.4);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.4);
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+
+.submit-btn:hover {
+  background: linear-gradient(180deg, #ffb74d 0%, #fb8c00 100%);
+  transform: translateY(-1px);
+}
+
+.submit-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Info Box */
+.info-box {
+  background-color: rgba(228, 212, 191, 0.55);
+  border: 2px solid #d8be9f;
+  border-radius: 18px;
+  padding: 18px 22px;
+  position: relative;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.info-icon {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  width: 22px;
+  height: 22px;
+  background-color: #bd9a77;
+  color: #ffffff;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 22px;
+  font-size: 13px;
+  font-style: italic;
+  font-family: serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.info-box h3 {
+  color: #3e2723;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.instructions {
+  padding-left: 20px;
+  color: #4a3525;
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 600;
+}
+
+.instructions li {
+  margin-bottom: 3px;
+}
+
+.highlight-link {
+  color: #2e6b3e;
+  text-decoration: underline;
+  font-weight: 700;
+}
+
+.highlight-link:hover {
+  color: #1b4727;
+}
+
+/* Toast Notification */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background-color: #323232;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 30px;
+  font-size: 15px;
+  font-weight: 600;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.toast.success {
+  background-color: #2e7d32;
+}
+
+.toast.error {
+  background-color: #c62828;
+}
+
+/* Responsive Styling for Mobile */
+@media (max-width: 600px) {
+  .voucher-card {
+    padding: 35px 18px 20px 18px;
+  }
+
+  .wood-badge {
+    width: 210px;
+    top: -28px;
+  }
+
+  .wood-badge span {
+    font-size: 18px;
+    letter-spacing: 1px;
+  }
+
+  .card-title {
+    font-size: 18px;
+  }
+
+  .input-body {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .code-input-container {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .code-slots {
+    justify-content: center;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+}
