@@ -49,7 +49,9 @@ $(document).ready(function() {
 		'columns': [
 			{ data: null },
 			{ data: 'id' },
-			{ data: 'category' },
+			{ 	data: 'category',
+				width: "200px" 
+			},
 			{ data: 'label' },
 			{ 	
 				data: null,
@@ -61,7 +63,7 @@ $(document).ready(function() {
 						const items 		= Object.entries(jsonData).map(([item, value]) => ({ item, value }));
 						var newValue = '';
 						items.forEach(({ item, value }) => {
-							newValue += item + ': ' + value + '<br>';
+							newValue += item + ': ' + JSON.stringify(value) + '<br>';
 						});
 						return newValue; 
 
@@ -69,37 +71,9 @@ $(document).ready(function() {
 						return data.value; 
 					}
 				},
-				orderable: false
+				orderable: false,
+				width: "460px"
 			},
-            /*{
-                data: 'report_media',
-                render: function(data, type, row) { 
-					/ *var fileImage	= ['jpg', 'png', 'gif'];
-					if (row.report_media_ext == 'mp4') {
-						return 'Video'; 
-					} else if (fileImage.includes(row.report_media_ext)) {
-						return 'Foto';
-					} else {
-						return '';
-					}* /
-					return row.report_media_all;
-				},
-                width: "90px"
-            },*/
-			/*{
-                data: null,
-                className: "data-action",
-                render: function(data, type, row) { return '<i class="fa fa-file link" data-id="'+data.id_article+'" data-toggle="modal" data-target="#blog-preview"/>'; },
-                orderable: false,
-				width: "20px"
-            },
-            {
-                data: null,
-                className: "data-action",
-                render: function(data, type, row) { return '<i class="fa fa-pencil-alt link" data-id="'+data.id_article+'" data-toggle="modal" data-target="#blog-edit"/>'; },
-                orderable: false,
-				width: "20px"
-            },*/
             {
                 data: null,
                 className: "data-action",
@@ -352,7 +326,7 @@ $(document).ready(function() {
 	});
 
 	/***** Submit Game Config Edit Object *****/
-	$('#game-edit-object .submit-edit, #game-edit-object-fixed .submit-edit').on('click', function(e) {
+	$('#game-edit-object .submit-edit, #game-edit-object-fixed .submit-edit, #game-edit-object-option .submit-edit').on('click', function(e) {
 		$('.overlay').show();
 		var dataType	= $(this).val();
 		var idConfig	= $('#game-edit-'+dataType+' .input-id').val();
@@ -361,14 +335,29 @@ $(document).ready(function() {
 		e.preventDefault();
 		const jsonData = {};
 
-		$('#game-edit-'+dataType+' .input-object-container .form-inline').each(function() {
-			const item = $(this).find('.item').val();
-			const value = $(this).find('.value').val();
-			if (item) {
-				jsonData[item] = Number(value);
-			}
-		});
-		//console.log(Object.keys(jsonData).length);
+		if (dataType == 'object-option') {
+			$('#game-edit-'+dataType+' .input-object-container .option-row').each(function() {
+				const key = $(this).find('.option-key').val();
+				const name = $(this).find('.option-name').val();
+				const cost = Number($(this).find('.option-cost').val());
+
+				jsonData[key] = {
+					name,
+					cost
+				};
+			});
+			console.log(jsonData);
+
+		} else {
+			$('#game-edit-'+dataType+' .input-object-container .form-inline').each(function() {
+				const item = $(this).find('.item').val();
+				const value = $(this).find('.value').val();
+				if (item) {
+					jsonData[item] = Number(value);
+				}
+			});
+		}
+		console.log(Object.keys(jsonData).length);
 		const jsonString = (Object.keys(jsonData).length > 0) ? JSON.stringify(jsonData) : "";
 		console.log(jsonString);
 
@@ -421,7 +410,7 @@ $(document).ready(function() {
 
 
 	/***** Modal - Game Config Edit *****/
-	$('#game-edit-string, #game-edit-boolean, #game-edit-number').on('show.bs.modal', function (event) {
+	$('#game-edit-string, #game-edit-boolean, #game-edit-number, #game-edit-select').on('show.bs.modal', function (event) {
 		var button		= $(event.relatedTarget);
 		var id			= button.data('id');
 		var dataType	= button.data('type');
@@ -453,6 +442,22 @@ $(document).ready(function() {
 
 					if (dataType == 'boolean') {
 						$('input[name="input-radio"][value="' + data.data[0]['value'] + '"]').prop('checked', true);
+					
+					} else if (dataType == 'select') {
+						/* parse JSON string into object and create select option */
+						const jsonString	= data.data[0]['options'];
+						const jsonData		= JSON.parse(jsonString);
+						const items 		= Object.entries(jsonData).map(([item, value]) => ({ item, value }));
+						$('.input-select-container .input-value').html('<option value="">Select Decoration ID</option>');
+						items.forEach(({ item, value }) => {
+							$('.input-select-container .input-value').append(
+								`<option value="${item}" ${item === data.data[0]['value'] ? "selected" : ""}>
+									${item}
+								</option>`
+							);
+						});
+						console.log(jsonString);
+					
 					} else {
 						$('.input-value').val(data.data[0]['value']);
 					}
@@ -470,7 +475,7 @@ $(document).ready(function() {
 
 
 	/***** Submit Game Config Edit *****/
-	$('#game-edit-string .submit-edit, #game-edit-number .submit-edit, #game-edit-boolean .submit-edit').on('click', function() {
+	$('#game-edit-string .submit-edit, #game-edit-number .submit-edit, #game-edit-boolean .submit-edit, #game-edit-select .submit-edit').on('click', function() {
 		$('.overlay').show();
 		var dataType	= $(this).val();
 		var idConfig	= $('#game-edit-'+dataType+' .input-id').val();

@@ -197,7 +197,7 @@ $(document).ready(function() {
 
 
 	/***** Submit Game Config Edit File *****/
-	$('.submit-edit').on('click', function() {
+	$('#museum-edit-file .submit-edit').on('click', function() {
 		$('.overlay').show();
 		const file		= $('#museum-edit-file .input-file').prop('files')[0];
 		var idConfig	= $('#museum-edit-file .input-id').val();
@@ -377,20 +377,27 @@ $(document).ready(function() {
 								xhr.setRequestHeader("Cache-Control", "no-cache");
 							},
 			success		: function(data) {
-				//data	= JSON.parse(data);
-				console.log(data);
-				//console.log(data.status);
-				if (data.status == "SUCCESS") {
-					$('#museum-edit-string').modal('hide');
-					table.draw(false);
-					$('.overlay').hide();
+								//data	= JSON.parse(data);
+								console.log(data);
+								//console.log(data.status);
+								if (data.status == "SUCCESS") {
+									$('#museum-edit-string').modal('hide');
+									table.draw(false);
+									$('.overlay').hide();
 
-				} else {
-					$('.alert-message').text(data.message);
-					$('.alert-message').show();
-					$('.overlay').hide();
-				}
-			}
+								} else {
+									$('.alert-message').text(data.message);
+									$('.alert-message').show();
+									$('.overlay').hide();
+								}
+							},
+			error		: function(xhr, status, error) {
+								//console.log("Error: " + error + " - " + status + " - " + xhr.responseJSON.message);
+								//$('.alert-message').text("An error occurred while updating the game config.");
+								$('.alert-message').text(xhr.responseJSON.message || "An error occurred while updating the game config.");
+								$('.alert-message').show();
+								$('.overlay').hide();
+							}
 
 		}).done(function() {
 			//table.draw(false);
