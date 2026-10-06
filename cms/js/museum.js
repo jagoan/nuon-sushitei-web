@@ -271,7 +271,33 @@ $(document).ready(function() {
 				//['para', ['ul', 'ol', 'paragraph']],
 				//['insert', ['link', 'picture', 'video']],
 				//['insert', ['link']],
-			]
+			],
+			callbacks: {
+				/*onKeydown: function(e) {
+					// Enter
+					if (e.keyCode === 13) {
+						e.preventDefault();
+						var selection = window.getSelection();
+
+						if (!selection.rangeCount) {
+							return;
+						}
+
+						var range = selection.getRangeAt(0);
+						// Buat <br/>
+						var br = document.createElement('br');
+						// Hapus selection kalau ada
+						range.deleteContents();
+						// Masukkan BR
+						range.insertNode(br);
+						// Pindahkan cursor setelah BR
+						range.setStartAfter(br);
+						range.setEndAfter(br);
+						selection.removeAllRanges();
+						selection.addRange(range);
+					}
+				}*/
+			}
 		});		
 
 		/* get data */
@@ -414,7 +440,7 @@ $(document).ready(function() {
 		$('.overlay').show();
 		var idConfig		= $('#museum-edit-text .input-id').val();
 		var name			= $('#museum-edit-text .input-name').val();
-		var value			= $('#museum-edit-text .input-value').val();
+		var value			= cleanSummernote($('#museum-edit-text .input-value').val());
 		//var point		= $('#logo-edit .input-point').val();
 		//const logo3d	= $('#logo-edit .input-logo-3d').prop('files')[0];
 		//console.log(isDeleteImage);
@@ -460,6 +486,27 @@ $(document).ready(function() {
 	});
 	
 });
+
+function cleanSummernote(content) {
+
+    return content
+        .replace(/<br\s*\/?>/gi, '<br/>')
+
+        .replace(/<\/p>\s*<p[^>]*>/gi, '<br/>')
+        .replace(/<p[^>]*>/gi, '')
+        .replace(/<\/p>/gi, '<br/>')
+
+        .replace(/<\/div>\s*<div[^>]*>/gi, '<br/>')
+        .replace(/<div[^>]*>/gi, '')
+        .replace(/<\/div>/gi, '<br/>')
+
+        .replace(/(<br\/>){3,}/gi, '<br/><br/>')
+
+		// <span ...> dan </span> → hapus
+        .replace(/<span[^>]*>/gi, '')
+        .replace(/<\/span>/gi, '');
+		
+}
 
 const headTitle = `
 	<title>Museum - ${CONFIG.SITE_NAME}</title>
