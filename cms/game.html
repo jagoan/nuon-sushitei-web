@@ -44,6 +44,7 @@
                                                 <th>Name</th>
                                                 <th>Value</th>
                                                 <th></th>
+                                                <th></th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -82,6 +83,12 @@
 					<div class="col-sm-9">
 						<input type="text" class="form-control input-value" placeholder="Value">
 					</div>
+					<div class="col-sm-9 offset-sm-3">
+						<div class="game-config-info-card card bg-light p-2 mt-4 d-none">
+							<h5>Info:</h5>
+							<div class="game-config-info"></div>
+						</div>							
+					</div> 
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -115,6 +122,12 @@
 					<div class="col-sm-9">
 						<input type="number" step="any" class="form-control input-value" placeholder="Value">
 					</div>
+					<div class="col-sm-9 offset-sm-3">
+						<div class="game-config-info-card card bg-light p-2 mt-4 d-none">
+							<h5>Info:</h5>
+							<div class="game-config-info"></div>
+						</div>							
+					</div> 
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -152,6 +165,12 @@
 							</select>
 						</div>
 					</div>
+					<div class="col-sm-9 offset-sm-3">
+						<div class="game-config-info-card card bg-light p-2 mt-4 d-none">
+							<h5>Info:</h5>
+							<div class="game-config-info"></div>
+						</div>							
+					</div> 
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -196,6 +215,12 @@
 							</label>
 						</div>
 					</div>
+					<div class="col-sm-9 offset-sm-3">
+						<div class="game-config-info-card card bg-light p-2 mt-4 d-none">
+							<h5>Info:</h5>
+							<div class="game-config-info"></div>
+						</div>							
+					</div> 
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -233,7 +258,13 @@
 						<button type="button" id="btn-add-option" class="btn btn-success btn-sm">
 							+ Add Option
 						</button>
-					</div>                    
+					</div>
+					<div class="col-sm-9 offset-sm-3">
+						<div class="game-config-info-card card bg-light p-2 mt-4 d-none">
+							<h5>Info:</h5>
+							<div class="game-config-info"></div>
+						</div>							
+					</div>                     
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -280,6 +311,12 @@
                         <button type="button" id="btn-add" class="btn btn-success btn-sm">
                             + Add Item
                         </button>
+					</div> 
+					<div class="col-sm-9 offset-sm-3">
+						<div class="game-config-info-card card bg-light p-2 mt-4 d-none">
+							<h5>Info:</h5>
+							<div class="game-config-info"></div>
+						</div>							
 					</div>                    
 				</div>
 			</div>
@@ -324,6 +361,12 @@
                                 -->
                             </div>
                         </div>
+					</div> 
+					<div class="col-sm-9 offset-sm-3">
+						<div class="game-config-info-card card bg-light p-2 mt-4 d-none">
+							<h5>Info:</h5>
+							<div class="game-config-info"></div>
+						</div>							
 					</div>                    
 				</div>
 			</div>
@@ -331,6 +374,52 @@
 				<input type="hidden" class="input-id">
                 <input type="hidden" class="input-name">
 				<button type="button" class="btn btn-primary submit-edit" value="object-fixed">Submit</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="game-default" tabindex="-1" role="dialog">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Game Config: Restore Default</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+                <div class="alert alert-danger alert-message"></div>
+                <p>Restore to default value for this game config?</p>
+
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Name</label>
+					<div class="col-sm-9">
+						<input type="text" class="form-control input-label" placeholder="Name" disabled>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label form-label">Current Value</label>
+					<div class="col-sm-9">
+						<textarea id="summernote" class="form-control input-value-preview" placeholder="Value" disabled></textarea>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label form-label">Default Value</label>
+					<div class="col-sm-9">
+						<textarea id="summernote" class="form-control input-valuedefault-preview" placeholder="Default Value" disabled></textarea>
+					</div>
+					<div class="col-sm-9 offset-sm-3">
+						<div class="game-config-info-card card bg-light p-2 mt-4 d-none">
+							<h5>Info:</h5>
+							<div class="game-config-info"></div>
+						</div>						
+					</div> 
+				</div>
+			</div>
+			<div class="modal-footer">	
+                <input type="hidden" class="input-id">
+				<button type="button" class="btn btn-primary submit-restore">Restore Default</button>			
 			</div>
 		</div>
 	</div>

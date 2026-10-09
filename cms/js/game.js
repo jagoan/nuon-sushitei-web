@@ -81,6 +81,13 @@ $(document).ready(function() {
                 orderable: false,
 				width: "20px"
             },
+            {
+                data: null,
+                className: "data-action",
+                render: function(data, type, row) { return '<i class="fa fa-rotate-left link" data-id="' + data.id + '" data-type="' + data.datatype + '" data-toggle="modal" data-target="#game-default"/>'; },
+                orderable: false,
+				width: "20px"
+            },
 		]				
 	});
 
@@ -103,7 +110,11 @@ $(document).ready(function() {
 		$('.alert-message').hide();
 		$('.input-id').val('');
 		$('.input-name').val('');
+		$('.input-label').val('');
 		$('.input-value').val('');
+		$('.input-value-preview').val('');		
+		$('.input-valuedefault-preview').val('');
+		$('.game-config-info').text('');
 		$(document.activeElement).blur();
 		//console.log('Modal closed');
 	});
@@ -199,6 +210,15 @@ $(document).ready(function() {
 							);
 						}
 					});
+
+					/* show info card - tooltip */
+					if (data.data[0]['tooltip'] && data.data[0]['tooltip'] !== "") {
+						$('.game-config-info-card').removeClass('d-none');
+						$('.game-config-info').text(data.data[0]['tooltip']);
+						
+					} else {
+						$('.game-config-info-card').addClass('d-none');
+					}
 				}
 			}
 
@@ -410,7 +430,7 @@ $(document).ready(function() {
 
 
 	/***** Modal - Game Config Edit *****/
-	$('#game-edit-string, #game-edit-boolean, #game-edit-number, #game-edit-select').on('show.bs.modal', function (event) {
+	$('#game-edit-string, #game-edit-boolean, #game-edit-number, #game-edit-select, #game-default').on('show.bs.modal', function (event) {
 		var button		= $(event.relatedTarget);
 		var id			= button.data('id');
 		var dataType	= button.data('type');
@@ -437,11 +457,17 @@ $(document).ready(function() {
 				console.log(data);            
 				//console.log(data.status);
 				if (data.status == "SUCCESS") {
+					$('.input-id').val(data.data[0]['id']);
 					$('.input-name').val(data.data[0]['name']);
-					$('.input-label').val(data.data[0]['label']);
+					//$('.input-label').val(data.data[0]['label']);
+					$('.input-label').val(data.data[0]['category'] + ' - ' + data.data[0]['label']);
 
 					if (dataType == 'boolean') {
 						$('input[name="input-radio"][value="' + data.data[0]['value'] + '"]').prop('checked', true);
+
+						/* preview value */
+						$('.input-value-preview').val(data.data[0]['value']);
+						$('.input-valuedefault-preview').val(data.data[0]['valuedefault']);
 					
 					} else if (dataType == 'select') {
 						/* parse JSON string into object and create select option */
@@ -456,10 +482,47 @@ $(document).ready(function() {
 								</option>`
 							);
 						});
-						console.log(jsonString);
+						
+						/* preview value */
+						$('.input-value-preview').val(data.data[0]['value']);
+						$('.input-valuedefault-preview').val(data.data[0]['valuedefault']);
 					
+					} else if (dataType == 'object' || dataType == 'object-fixed' || dataType == 'object-option') {
+						/* parse JSON string into object - value */
+						const jsonStringV	= data.data[0]['value'];
+						const jsonDataV		= JSON.parse(jsonStringV);
+						const itemsV 		= Object.entries(jsonDataV).map(([item, value]) => ({ item, value }));
+						var newValue = '';
+						itemsV.forEach(({ item, value }) => {
+							newValue += item + ': ' + JSON.stringify(value) + '\n';
+						});
+						$('.input-value-preview').val(newValue);
+
+						/* parse JSON string into object - default value */
+						const jsonStringVD	= data.data[0]['valuedefault'];
+						const jsonDataVD		= JSON.parse(jsonStringVD);
+						const itemsVD 		= Object.entries(jsonDataVD).map(([item, value]) => ({ item, value }));
+						var newValue = '';
+						itemsVD.forEach(({ item, value }) => {
+							newValue += item + ': ' + JSON.stringify(value) + '\n';
+						});
+						$('.input-valuedefault-preview').val(newValue);
+
 					} else {
 						$('.input-value').val(data.data[0]['value']);
+
+						/* preview value */
+						$('.input-value-preview').val(data.data[0]['value']);
+						$('.input-valuedefault-preview').val(data.data[0]['valuedefault']);
+					}
+
+					/* show info card - tooltip */
+					if (data.data[0]['tooltip'] && data.data[0]['tooltip'] !== "") {
+						$('.game-config-info-card').removeClass('d-none');
+						$('.game-config-info').text(data.data[0]['tooltip']);
+
+					} else {
+						$('.game-config-info-card').addClass('d-none');
 					}
 				}
 			}
@@ -520,6 +583,53 @@ $(document).ready(function() {
 								//console.log("Error: " + error + " - " + status + " - " + xhr.responseJSON.message);
 								//$('.alert-message').text("An error occurred while updating the game config.");
 								$('.alert-message').text(xhr.responseJSON.message || "An error occurred while updating the game config.");
+								$('.alert-message').show();
+								$('.overlay').hide();
+							}
+
+		}).done(function() {
+			//table.draw(false);
+
+		}).fail(function( msg ) {
+			//alert( "Fail: " + JSON.stringify(msg) );
+			console.log( "Fail: " + JSON.stringify(msg) );
+		});		
+	});
+
+
+	/***** Submit Game Restore Default *****/
+	$('#game-default .submit-restore').on('click', function() {
+		$('.overlay').show();
+		var idConfig	= $('#game-default .input-id').val();
+		console.log("Restore Default - ID:", idConfig);
+
+		$.ajax({
+			url			: CONFIG.API_URL + 'game/update-default/' + idConfig,
+			type		: 'POST',
+			cache		: false,
+			processData	: false,
+			contentType	: 'application/json',
+			data		: '',
+			headers		: { "cache-control": "no-cache" },
+			beforeSend	: function(xhr) {
+								xhr.setRequestHeader("x-access-token", token);
+								xhr.setRequestHeader("Cache-Control", "no-cache");
+							},
+			success		: function(data) {
+								console.log(data);
+								if (data.status == "SUCCESS") {
+									$('#game-default').modal('hide');
+									table.draw(false);
+									$('.overlay').hide();
+								} else {
+									$('.alert-message').text(data.message);
+									$('.alert-message').show();
+									$('.overlay').hide();
+								}
+							},
+			error		: function(xhr, status, error) {
+								console.log("Error: " + error + " - " + status + " - " + xhr.responseJSON.message);
+								$('.alert-message').text(xhr.responseJSON.message || "An error occurred while restoring the game config.");
 								$('.alert-message').show();
 								$('.overlay').hide();
 							}
