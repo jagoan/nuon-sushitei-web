@@ -32,6 +32,7 @@ $(document).ready(function() {
 				console.log(data);
 				if (data.status == "SUCCESS") {
                     localStorage.setItem(CONFIG.PREFIX + "token", data.data.token);
+					localStorage.setItem(CONFIG.PREFIX + "user", username);
                     window.location.replace("voucher.html");
 					$('.overlay').hide();
 
