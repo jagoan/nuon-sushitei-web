@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	console.log('Password');
+	//console.log('Password');
 
 	/***** CHECK LOGIN STATUS *****/	
     const token = localStorage.getItem(CONFIG.PREFIX + "token");    

@@ -45,6 +45,15 @@ $(document).ready(function() {
 			},
 			'beforeSend': function (request) {
 				request.setRequestHeader("x-access-token", token);
+			},
+			error: function (xhr, error, thrown) {
+				if (xhr.status === 401) {
+					window.location.href = 'logout.html';
+					return;
+				}
+
+				console.error('AJAX Error:', xhr.status, thrown);
+				alert('Gagal mengambil data dari server.');
 			}
 		},
 		'columns': [
@@ -100,18 +109,21 @@ $(document).ready(function() {
             {
                 data: null,
                 className: "data-action",
-                render: function(data, type, row) { return '<i class="fa fa-pencil-alt link" data-id="' + data.id + '" data-toggle="modal" data-target="#coupon-edit"/>'; },
+                render: function(data, type, row) { return '<span data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-alt link" data-id="' + data.id + '" data-toggle="modal" data-target="#coupon-edit"/></span>'; },
                 orderable: false,
-				width: "20px"
+				width: "50px"
             },
             {
                 data: null,
                 className: "data-action",
-                render: function(data, type, row) { return '<i class="fa fa-trash link" data-id="'+data.id+'" data-toggle="modal" data-target="#coupon-delete"/>'; },
+                render: function(data, type, row) { return '<span data-toggle="tooltip" title="Delete"><i class="fa fa-trash link" data-id="'+data.id+'" data-toggle="modal" data-target="#coupon-delete"/></span>'; },
                 orderable: false,
-				width: "20px"
+				width: "50px"
             },
-		]				
+		],
+		"drawCallback": function(settings) {
+			$('[data-toggle="tooltip"]').tooltip();
+		}				
 	});
 
     table.on( 'draw.dt', function () {

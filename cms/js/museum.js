@@ -45,6 +45,15 @@ $(document).ready(function() {
 			},
 			'beforeSend': function (request) {
 				request.setRequestHeader("x-access-token", token);
+			},
+			error: function (xhr, error, thrown) {
+				if (xhr.status === 401) {
+					window.location.href = 'logout.html';
+					return;
+				}
+
+				console.error('AJAX Error:', xhr.status, thrown);
+				alert('Gagal mengambil data dari server.');
 			}
 		},
 		'columns': [

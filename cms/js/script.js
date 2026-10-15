@@ -70,7 +70,7 @@ function sbNavigationTop() {
         e.preventDefault();
         $("body").toggleClass("sb-sidenav-toggled");
     });
-    console.log("SB Admin Navigation Top Initialized");
+    //console.log("SB Admin Navigation Top Initialized");
 }
 
 function sbNavigationLeft() {
@@ -81,7 +81,7 @@ function sbNavigationLeft() {
             $(this).addClass("active");
         }
     });
-    console.log("SB Admin Navigation Left Initialized");
+    //console.log("SB Admin Navigation Left Initialized");
 }
 
 /* function: nl2br */

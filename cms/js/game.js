@@ -44,6 +44,15 @@ $(document).ready(function() {
 			},
 			'beforeSend': function (request) {
 				request.setRequestHeader("x-access-token", token);
+			},
+			error: function (xhr, error, thrown) {
+				if (xhr.status === 401) {
+					window.location.href = 'logout.html';
+					return;
+				}
+
+				console.error('AJAX Error:', xhr.status, thrown);
+				alert('Gagal mengambil data dari server.');
 			}
 		},
 		'columns': [
@@ -77,18 +86,21 @@ $(document).ready(function() {
             {
                 data: null,
                 className: "data-action",
-                render: function(data, type, row) { return '<i class="fa fa-pencil-alt link" data-id="' + data.id + '" data-type="' + data.datatype + '" data-toggle="modal" data-target="#game-edit-' + data.datatype + '"/>'; },
+                render: function(data, type, row) { return '<span data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-alt link" data-id="' + data.id + '" data-type="' + data.datatype + '" data-toggle="modal" data-target="#game-edit-' + data.datatype + '"/></span>'; },
                 orderable: false,
-				width: "20px"
+				width: "58px"
             },
             {
                 data: null,
                 className: "data-action",
-                render: function(data, type, row) { return '<i class="fa fa-rotate-left link" data-id="' + data.id + '" data-type="' + data.datatype + '" data-toggle="modal" data-target="#game-default"/>'; },
+                render: function(data, type, row) { return '<span data-toggle="tooltip" title="Restore to Default Value"><i class="fa fa-rotate-left link" data-id="' + data.id + '" data-type="' + data.datatype + '" data-toggle="modal" data-target="#game-default"/></span>'; },
                 orderable: false,
-				width: "20px"
+				width: "58px"
             },
-		]				
+		],
+		"drawCallback": function(settings) {
+			$('[data-toggle="tooltip"]').tooltip();
+		}				
 	});
 
     table.on( 'draw.dt', function () {
