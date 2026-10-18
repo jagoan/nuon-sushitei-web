@@ -3,6 +3,9 @@ $(document).ready(function() {
 	/***** CHECK LOGIN STATUS *****/
 	$('.overlay').show();
     const token = localStorage.getItem(CONFIG.PREFIX + "token");
+	const user = localStorage.getItem(CONFIG.PREFIX + "user");
+	$('.active-user').text(user);
+	
     if (!token) {
         localStorage.removeItem(CONFIG.PREFIX + "token");
         window.location.replace("login.html");
@@ -116,12 +119,12 @@ $(document).ready(function() {
 					return `<h4>` + row.category + `</h4>
 					<div class="museum-segment museum-image">
 						<img src="` + imageUrl + `" class="img-fluid"/>
-						<i class="fa fa-pencil-alt link" data-id="` +  row.details[0]['id'] + `" data-toggle="modal" data-target="#museum-edit-` + row.details[0]['datatype'] + `"></i>
+						<span data-toggle="tooltip" title="Delete"><i class="fa fa-pencil-alt link" data-id="` +  row.details[0]['id'] + `" data-toggle="modal" data-target="#museum-edit-` + row.details[0]['datatype'] + `"></i></span>
 						<i class="fa fa-circle-info link" data-toggle="tooltip" title="` + row.details[0]['tooltip'] + `"></i>
 					</div>
-					<div class="museum-segment"><label>Title <i class="fa fa-pencil-alt link" data-id="` +  row.details[3]['id'] + `" data-toggle="modal" data-target="#museum-edit-` + row.details[3]['datatype'] + `"></i><i class="fa fa-circle-info link" data-toggle="tooltip" title="` + row.details[3]['tooltip'] + `"></i></label><div>` + row.details[3]['value'] + `</div></div>
-					<div class="museum-segment"><label>Subtitle <i class="fa fa-pencil-alt link" data-id="` +  row.details[4]['id'] + `" data-toggle="modal" data-target="#museum-edit-` + row.details[4]['datatype'] + `"></i><i class="fa fa-circle-info link" data-toggle="tooltip" title="` + row.details[4]['tooltip'] + `"></i></label><div>` + row.details[4]['value'] + `</div></div>
-					<div class="museum-segment"><label>Description <i class="fa fa-pencil-alt link" data-id="` +  row.details[5]['id'] + `" data-toggle="modal" data-target="#museum-edit-` + row.details[5]['datatype'] + `"></i><i class="fa fa-circle-info link" data-toggle="tooltip" title="` + row.details[5]['tooltip'] + `"></i></label><div>` + nl2br(row.details[5]['value']) + `</div></div>`; 
+					<div class="museum-segment"><label>Title <span data-toggle="tooltip" title="Delete"><i class="fa fa-pencil-alt link" data-id="` +  row.details[3]['id'] + `" data-toggle="modal" data-target="#museum-edit-` + row.details[3]['datatype'] + `"></i></span><i class="fa fa-circle-info link" data-toggle="tooltip" title="` + row.details[3]['tooltip'] + `"></i></label><div>` + row.details[3]['value'] + `</div></div>
+					<div class="museum-segment"><label>Subtitle <span data-toggle="tooltip" title="Delete"><i class="fa fa-pencil-alt link" data-id="` +  row.details[4]['id'] + `" data-toggle="modal" data-target="#museum-edit-` + row.details[4]['datatype'] + `"></i></span><i class="fa fa-circle-info link" data-toggle="tooltip" title="` + row.details[4]['tooltip'] + `"></i></label><div>` + row.details[4]['value'] + `</div></div>
+					<div class="museum-segment"><label>Description <span data-toggle="tooltip" title="Delete"><i class="fa fa-pencil-alt link" data-id="` +  row.details[5]['id'] + `" data-toggle="modal" data-target="#museum-edit-` + row.details[5]['datatype'] + `"></i></span><i class="fa fa-circle-info link" data-toggle="tooltip" title="` + row.details[5]['tooltip'] + `"></i></label><div>` + nl2br(row.details[5]['value']) + `</div></div>`; 
 				},
                 orderable: false,
 				width: "20px"
