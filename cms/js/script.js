@@ -30,6 +30,19 @@ $(document).ready(function () {
     });
 });
 
+function filterSidebarMenu() {
+    const role = localStorage.getItem(CONFIG.PREFIX + "role") || "";
+
+    $("#layoutSidenav_nav .sb-sidenav [data-role]").each(function () {
+        const allowedRoles = $(this)
+            .attr("data-role")
+            .split(",")
+            .map(role => role.trim());
+
+        $(this).toggle(allowedRoles.includes(role));
+    });
+}
+
 
 function applyConfig(container) {
     // Text
@@ -82,6 +95,10 @@ function sbNavigationLeft() {
         }
     });
     //console.log("SB Admin Navigation Left Initialized");
+    filterSidebarMenu();
+
+    const user = localStorage.getItem(CONFIG.PREFIX + "user");
+    $('.active-user').text(user);
 }
 
 /* function: nl2br */

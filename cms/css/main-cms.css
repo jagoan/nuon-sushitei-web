@@ -3,6 +3,11 @@
 	text-align:center;
 }
 
+.sb-sidenav .sb-sidenav-menu .nav .nav-link.user-role-01, 
+.sb-sidenav .sb-sidenav-menu .nav .nav-link.user-role-02 {
+	display:none;
+}
+
 .btn-dt-top {
 	margin:0 5px 20px 0;
 }

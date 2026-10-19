@@ -3,9 +3,6 @@ $(document).ready(function() {
 	/***** CHECK LOGIN STATUS *****/
 	$('.overlay').show();
     const token = localStorage.getItem(CONFIG.PREFIX + "token");
-	const user = localStorage.getItem(CONFIG.PREFIX + "user");
-	$('.active-user').text(user);
-	
     if (!token) {
         localStorage.removeItem(CONFIG.PREFIX + "token");
         window.location.replace("login.html");
