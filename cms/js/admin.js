@@ -1,6 +1,4 @@
 $(document).ready(function() {
-	console.log('Coupon');
-
 	/***** CHECK LOGIN STATUS *****/
 	$('.overlay').show();
     const token = localStorage.getItem(CONFIG.PREFIX + "token");
@@ -61,18 +59,26 @@ $(document).ready(function() {
 			{ data: 'id' },
 			{ data: 'username' },
 			{ data: 'email' },
-			{ data: 'role' },
+			{ data: 'role_name' },
             {
                 data: null,
                 className: "data-action",
-                render: function(data, type, row) { return '<span data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-alt link" data-id="' + data.id + '" data-toggle="modal" data-target="#coupon-edit"/></span>'; },
+                render: function(data, type, row) { 
+					return '<span data-toggle="tooltip" title="Edit"><i class="fa fa-pencil-alt link" data-id="' + data.id + '" data-toggle="modal" data-target="#admin-edit"/></span>'; 
+				},
                 orderable: false,
 				width: "50px"
             },
             {
                 data: null,
                 className: "data-action",
-                render: function(data, type, row) { return '<span data-toggle="tooltip" title="Delete"><i class="fa fa-trash link" data-id="'+data.id+'" data-toggle="modal" data-target="#coupon-delete"/></span>'; },
+                render: function(data, type, row) { 
+					if (data.role === 'ROLE01') {
+						return '';
+					} else {
+						return '<span data-toggle="tooltip" title="Delete"><i class="fa fa-trash link" data-id="'+data.id+'" data-toggle="modal" data-target="#admin-delete"/></span>'; 
+					}
+				},
                 orderable: false,
 				width: "50px"
             },
@@ -100,48 +106,35 @@ $(document).ready(function() {
 		$('.alert-message').text('');
 		$('.alert-message').hide();
 		$('.input-id').val('');
-		$('.input-code').val('');
-		$('.input-description').val('');
-		$('.input-status[value="true"]').prop("checked", true);
-		$('.form-inline').html('');
+		$('.input-username').val('');
+		$('.input-password').val('');
+		$('.input-email').val('');
+		$('.input-role').val('');
 		$(document.activeElement).blur();
 		//console.log('Modal closed');
 	});
 
 
 	/***** Submit Coupon Add *****/
-	$('#coupon-add .submit-add').on('click', function(e) {
+	$('#admin-add .submit-add').on('click', function(e) {
 		$('.overlay').show();
-		var idConfig	= $('#coupon-add .input-id').val();
-		var code		= $('#coupon-add .input-code').val();
-		var description	= $('#coupon-add .input-description').val();
-		var status		= $('#coupon-add .input-status:checked').val();
-
-		e.preventDefault();
-		const jsonData = {};
-
-		$('#coupon-add .input-object-container .form-inline').each(function() {
-			const item = $(this).find('.item').val();
-			const value = $(this).find('.value').val();
-			if (item) {
-				jsonData[item] = Number(value);
-			}
-		});
-		//console.log(Object.keys(jsonData).length);
-		const jsonString = (Object.keys(jsonData).length > 0) ? JSON.stringify(jsonData) : "";
-		//console.log(jsonString);
+		var idAdmin		= $('#admin-add .input-id').val();
+		var username	= $('#admin-add .input-username').val();
+		var password	= $('#admin-add .input-password').val();
+		var email		= $('#admin-add .input-email').val();
+		var role		= $('#admin-add .input-role').val();
 
 		$.ajax({
-			url			: CONFIG.API_URL + 'coupon/add',
+			url			: CONFIG.API_URL + 'admin/create',
 			type		: 'POST',
 			cache		: false,
 			processData	: false,
 			contentType	: 'application/json',
 			data		: JSON.stringify({
-								coupon_code: code,
-								coupon_description: description,
-								is_active: status,
-								coupon_reward: jsonString
+								username: username,
+								password: password,
+								email: email,
+								role: role
 							}),
 			headers		: { "cache-control": "no-cache" },
 			beforeSend	: function(xhr) {
@@ -153,7 +146,7 @@ $(document).ready(function() {
 								console.log(data);
 								//console.log(data.status);
 								if (data.status == "SUCCESS") {
-									$('#coupon-add').modal('hide');
+									$('#admin-add').modal('hide');
 									table.draw(false);
 									$('.overlay').hide();
 
@@ -181,14 +174,14 @@ $(document).ready(function() {
 	});
 
 
-	/***** Modal - Coupon Edit *****/
-	$('#coupon-edit').on('show.bs.modal', function (event) {
+	/***** Modal - Admin Edit *****/
+	$('#admin-edit').on('show.bs.modal', function (event) {
 		var button		= $(event.relatedTarget);
 		var id			= button.data('id');
 
 		/* get data */
 		$.ajax({
-			url			: CONFIG.API_URL + 'coupon/' + id,
+			url			: CONFIG.API_URL + 'admin/' + id,
 			type		: 'GET',
 			cache		: false,
 			processData	: false,
@@ -203,21 +196,22 @@ $(document).ready(function() {
 				console.log(data);            
 				//console.log(data.status);
 				if (data.status == "SUCCESS") {
-					$('#coupon-edit .input-id').val(id);
-					$('#coupon-edit .input-code').val(data.data[0]['coupon_code']);
-					$('#coupon-edit .input-description').val(data.data[0]['coupon_description']);
-					$('#coupon-edit .input-status[value="' + data.data[0]['is_active'] + '"]').prop('checked', true);
+					$('#admin-edit .input-id').val(id);
+					$('#admin-edit .input-username').val(data.data[0]['username']);
+					$('#admin-edit .input-email').val(data.data[0]['email']);
+					$('#admin-edit .input-role option[value="' + data.data[0]['role'] + '"]').prop('selected', true);
 
-					/* parse JSON string into object and create input rows */
-					const jsonString	= data.data[0]['coupon_reward'];
-					const jsonData		= JSON.parse(jsonString);
-					const items 		= Object.entries(jsonData).map(([item, value]) => ({ item, value }));
-					$('#coupon-edit .input-object-container').html('');
-					items.forEach(({ item, value }) => {
-						$('#coupon-edit .input-object-container').append(
-							createItemIngredient(item, value)
-						);
-					});
+					if (data.data[0]['username'] == 'admin') {
+						$('#admin-edit .input-role option[value="ROLE02"]').prop('selected', true);
+						$('#admin-edit .input-username').prop('disabled', true);
+						$('#admin-edit .input-password').prop('disabled', true);
+						$('#admin-edit .input-role').prop('disabled', true);
+					}
+
+				} else {
+					$('.alert-message').text(data.message);
+					$('.alert-message').show();
+					$('.overlay').hide();	
 				}
 			}
 
@@ -230,64 +224,20 @@ $(document).ready(function() {
 		});			
 	});
 
-	/* ingredient options */
-	const itemOptions = [ "rice", "cucumber", "wasabi", "ginger", "salmon", "tuna", "shrimp", "crab", "nori", "beef", "chicken", "egg", "milk", "soda", "mocktail", "tea", "coffee", "coins", "fragments" ];
 
-	/* select ingredient */
-	function createItemIngredient(item = "", value = "") {
-		let options = `<option value="">Select Reward</option>`;
-		itemOptions.forEach(option => {
-			options += `
-				<option value="${option}" ${option === item ? "selected" : ""}>
-					${option}
-				</option>
-			`;
-		});
-
-		return `
-			<div class="form-inline mb-2">
-				<select name="item[]" class="item form-control w-auto mr-2">
-					${options}
-				</select>
-
-				<input 
-					type="number" 
-					step="any"
-					name="value[]" 
-					class="value form-control w-25"
-					value="${value}"
-				>
-
-				<button type="button" class="btn-remove btn-danger btn btn-sm ml-2">
-					Remove
-				</button>
-			</div>
-		`;
-	}
-
-	$('.input-object-container').on('click', '.btn-remove', function() {
-		$(this).closest('.form-inline').remove();
-	});
-
-	$('.btn-add').on('click', function() {
-		$('.input-object-container').append(
-			createItemIngredient()
-		);
-		console.log('Added new item row');
-	});
-
-	/***** Submit Coupon Edit *****/
-	$('#coupon-edit .submit-edit').on('click', function(e) {
+	/***** Submit Admin Edit *****/
+	$('#admin-edit .submit-edit').on('click', function(e) {
 		$('.overlay').show();
-		var idConfig	= $('#coupon-edit .input-id').val();
-		var code		= $('#coupon-edit .input-code').val();
-		var description	= $('#coupon-edit .input-description').val();
-		var status		= $('#coupon-edit .input-status:checked').val();
+		var idAdmin	= $('#admin-edit .input-id').val();
+		var username	= $('#admin-edit .input-username').val();
+		var email		= $('#admin-edit .input-email').val();
+		var role		= $('#admin-edit .input-role').val();
+		var password	= $('#admin-edit .input-password').val();
 
 		e.preventDefault();
 		const jsonData = {};
 
-		$('#coupon-edit .input-object-container .form-inline').each(function() {
+		$('#admin-edit .input-object-container .form-inline').each(function() {
 			const item = $(this).find('.item').val();
 			const value = $(this).find('.value').val();
 			if (item) {
@@ -299,18 +249,18 @@ $(document).ready(function() {
 		//console.log(jsonString);
 
 		$.ajax({
-			url			: CONFIG.API_URL + 'coupon/update',
+			url			: CONFIG.API_URL + 'admin/update',
 			type		: 'POST',
 			cache		: false,
 			processData	: false,
 			contentType	: 'application/json',
 			data		: JSON.stringify({
-								id: idConfig,
-								coupon_code: code,
-								coupon_description: description,
-								is_active: status,
-								coupon_reward: jsonString
-							}),
+								id: idAdmin,
+								username: username,
+								email: email,
+								role: role,
+								password: password
+							}),	
 			headers		: { "cache-control": "no-cache" },
 			beforeSend	: function(xhr) {
 								xhr.setRequestHeader("x-access-token", token);
@@ -321,7 +271,7 @@ $(document).ready(function() {
 								console.log(data);
 								//console.log(data.status);
 								if (data.status == "SUCCESS") {
-									$('#coupon-edit').modal('hide');
+									$('#admin-edit').modal('hide');
 									table.draw(false);
 									$('.overlay').hide();
 
@@ -349,19 +299,15 @@ $(document).ready(function() {
 	});
 
 
-	/***** Modal - Coupon Delete *****/
-	$('#coupon-delete').on('show.bs.modal', function (event) {
+	/***** Modal - Admin Delete *****/
+	$('#admin-delete').on('show.bs.modal', function (event) {
 		var button	= $(event.relatedTarget);
 		var id		= button.data('id');
-		//var blog	= button.data('blog');
-		//var modal	= $(this);
-		//console.log(product.role);
 		console.log(id);
-		//console.log(blog.reply_time_string);
 
 		/* get data */
 		$.ajax({
-			url			: CONFIG.API_URL + 'coupon/' + id,
+			url			: CONFIG.API_URL + 'admin/' + id,
 			type		: 'GET',
 			cache		: false,
 			processData	: false,
@@ -376,30 +322,15 @@ $(document).ready(function() {
 				console.log(data);            
 				//console.log(data.status);
 				if (data.status == "SUCCESS") {
-					$('#coupon-delete .input-id').val(id);
-					$('#coupon-delete .delete-code').html(data.data[0]['coupon_code']);
-					$('#coupon-delete .delete-description').html(data.data[0]['coupon_description']);
-					
-					if (isJsonString(data.data[0]['coupon_reward'])) {
-						/* parse JSON string into object */
-						const jsonString	= data.data[0]['coupon_reward'];
-						const jsonData		= JSON.parse(jsonString);
-						const items 		= Object.entries(jsonData).map(([item, value]) => ({ item, value }));
-						var newValue = '';
-						items.forEach(({ item, value }) => {
-							newValue += item + ': ' + value + '<br>';
-						});
-						$('#coupon-delete .delete-reward').html(newValue);
-
-					} else {
-						$('#coupon-delete .delete-reward').html(data.data[0]['coupon_reward']);
-					}
-
-					if (data.data[0]['is_active'] == true) {
-						$('#coupon-delete .delete-status').html('<span class="text-success">Active</span>');
-					} else {
-						$('#coupon-delete .delete-status').html('<span class="text-secondary">Inactive</span>');
-					}
+					$('#admin-delete .input-id').val(data.data[0]['username']);
+					$('#admin-delete .delete-username').html(data.data[0]['username']);
+					$('#admin-delete .delete-email').html(data.data[0]['email']);
+					$('#admin-delete .delete-access').html(data.data[0]['role_name']);					
+				
+				} else {
+					$('.alert-message').text(data.message);
+					$('.alert-message').show();
+					$('.overlay').hide();
 				}
 			}
 
@@ -414,15 +345,15 @@ $(document).ready(function() {
 	});
 
 
-	/***** Delete Coupon *****/
+	/***** Delete Admin *****/
 	$('.submit-delete').on('click', function() {
 		$('.overlay').show();
 		//var id	= $(this).data('id');
-		var id	= $('#coupon-delete .input-id').val();
+		var id	= $('#admin-delete .input-id').val();
 		console.log(id);
 
 		$.ajax({
-			url			: CONFIG.API_URL + 'coupon/' + id,
+			url			: CONFIG.API_URL + 'admin/' + id,
 			type		: 'DELETE',
 			dataType	: 'json',
 			cache		: false,
@@ -435,7 +366,7 @@ $(document).ready(function() {
 			success		: function(data) {
 				console.log(data);
 				if (data.status == "SUCCESS") {
-					$('#coupon-delete').modal('hide');
+					$('#admin-delete').modal('hide');
 					table.draw(false);
 					$('.overlay').hide();
 

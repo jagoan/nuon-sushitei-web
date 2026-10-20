@@ -39,7 +39,7 @@
                                                 <th>ID</th>
                                                 <th>Username</th>
                                                 <th>Email</th>
-                                                <th>Role</th>
+                                                <th>Access</th>
                                                 <th class="text-center">Edit</th>
                                                 <th class="text-center">Delete</th>
                                             </tr>
@@ -62,7 +62,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">New Coupon</h5>
+				<h5 class="modal-title">New Admin</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -70,53 +70,32 @@
 			<div class="modal-body">
 				<div class="alert alert-danger alert-message"></div>
 				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">Code *</label>
+					<label class="col-sm-3 col-form-label">Username *</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control input-code w-50" placeholder="Code">
+						<input type="text" class="form-control input-username" placeholder="Username">
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">Description *</label>
+					<label class="col-sm-3 col-form-label">Password *</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control input-description" placeholder="Description">
+						<input type="text" class="form-control input-password" placeholder="Password">
+					</div>
+				</div>				
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Email *</label>
+					<div class="col-sm-9">
+						<input type="email" class="form-control input-email" placeholder="Email">
 					</div>
 				</div>
                 <div class="form-group row">
-					<label class="col-sm-3 col-form-label">Reward *</label>
+					<label class="col-sm-3 col-form-label">Access *</label>
 					<div class="col-sm-9">
-                        <div class="input-object-container">
-                            <div class="form-inline mb-2">
-                                <!-- 
-                                <select class="form-control input-object-key w-auto mr-2">
-                                    <option value="">Select Ingredient</option>
-                                    <option value="key1">Ingredient 1</option>
-                                    <option value="key2">Ingredient 2</option>
-                                </select>
-                                <input type="text" class="form-control input-object-value w-25" placeholder="Value">
-                                -->
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-success btn-sm btn-add">
-                            + Add Item
-                        </button>
+                        <select class="form-control input-role w-auto">
+							<option value="">Select Access</option>
+							<option value="ROLE03">Voucher, Coupon, Play Session</option>
+							<option value="ROLE02">All Features</option>
+						</select>
 					</div>                    
-				</div>
-                <div class="form-group row">
-					<label class="col-sm-3 col-form-label">Status *</label>
-					<div class="col-sm-9">
-						<div class="form-check">
-							<input class="form-check-input input-status" type="radio" name="input-status" value="true" checked="checked">
-							<label class="form-check-label">
-								Active
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input input-status" type="radio" name="input-status" value="false">
-							<label class="form-check-label">
-								Inactive
-							</label>
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -131,7 +110,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Edit Coupon</h5>
+				<h5 class="modal-title">Edit Admin</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -139,53 +118,32 @@
 			<div class="modal-body">
 				<div class="alert alert-danger alert-message"></div>
 				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">Code *</label>
+					<label class="col-sm-3 col-form-label">Username *</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control input-code w-50" placeholder="Code">
+						<input type="text" class="form-control input-username" placeholder="Username" readonly>
 					</div>
 				</div>
 				<div class="form-group row">
-					<label class="col-sm-3 col-form-label">Description *</label>
+					<label class="col-sm-3 col-form-label">Password</label>
 					<div class="col-sm-9">
-						<input type="text" class="form-control input-description" placeholder="Description">
+						<input type="text" class="form-control input-password" placeholder="New password (leave blank to keep current)">
+					</div>
+				</div>				
+				<div class="form-group row">
+					<label class="col-sm-3 col-form-label">Email *</label>
+					<div class="col-sm-9">
+						<input type="email" class="form-control input-email" placeholder="Email">
 					</div>
 				</div>
                 <div class="form-group row">
-					<label class="col-sm-3 col-form-label">Reward *</label>
+					<label class="col-sm-3 col-form-label">Access *</label>
 					<div class="col-sm-9">
-                        <div class="input-object-container">
-                            <div class="form-inline mb-2">
-                                <!-- 
-                                <select class="form-control input-object-key w-auto mr-2">
-                                    <option value="">Select Ingredient</option>
-                                    <option value="key1">Ingredient 1</option>
-                                    <option value="key2">Ingredient 2</option>
-                                </select>
-                                <input type="text" class="form-control input-object-value w-25" placeholder="Value">
-                                -->
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-success btn-sm btn-add">
-                            + Add Item
-                        </button>
+                        <select class="form-control input-role w-auto">
+							<option value="">Select Access</option>
+							<option value="ROLE03">Voucher, Coupon, Play Session</option>
+							<option value="ROLE02">All Features</option>
+						</select>
 					</div>                    
-				</div>
-                <div class="form-group row">
-					<label class="col-sm-3 col-form-label">Status *</label>
-					<div class="col-sm-9">
-						<div class="form-check">
-							<input class="form-check-input input-status" type="radio" name="input-status-edit" value="true" checked>
-							<label class="form-check-label">
-								Active
-							</label>
-						</div>
-						<div class="form-check">
-							<input class="form-check-input input-status" type="radio" name="input-status-edit" value="false">
-							<label class="form-check-label">
-								Inactive
-							</label>
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -200,7 +158,7 @@
 	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">Delete Coupon</h5>
+				<h5 class="modal-title">Delete Admin</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 				  <span aria-hidden="true">&times;</span>
 				</button>
@@ -212,20 +170,16 @@
 				<table class="table table-striped table-responsive-sm">
 					<tbody>
 						<tr>
-							<th scope="row">Code</th>
-							<td class="delete-code"></td>
+							<th scope="row">Username</th>
+							<td class="delete-username"></td>
 						</tr>
 						<tr>
-							<th scope="row">Description</th>
-							<td class="delete-description"></td>
+							<th scope="row">Email</th>
+							<td class="delete-email"></td>
 						</tr>
 						<tr>
-							<th scope="row">Reward</th>
-							<td class="delete-reward"></td>
-						</tr>
-						<tr>
-							<th scope="row">Status</th>
-							<td class="delete-status"></td>
+							<th scope="row">Access</th>
+							<td class="delete-access"></td>
 						</tr>
 					</tbody>
 				</table>

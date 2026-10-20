@@ -81,7 +81,7 @@ $(document).ready(function() {
 					}
 				},
 				orderable: false,
-				width: "460px"
+				width: "300px"
 			},
             {
                 data: null,
