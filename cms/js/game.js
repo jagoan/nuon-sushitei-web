@@ -654,6 +654,52 @@ $(document).ready(function() {
 			console.log( "Fail: " + JSON.stringify(msg) );
 		});		
 	});
+
+
+	/***** Download Game Config JSON *****/
+	$('.download-json').on('click', function () {
+		$.ajax({
+			url			: CONFIG.API_URL + 'game/download',
+			type		: 'GET',
+			dataType	: 'json',
+			headers		: { "cache-control": "no-cache" },
+			beforeSend	: function(xhr) {
+								xhr.setRequestHeader("x-access-token", token);
+								xhr.setRequestHeader("Cache-Control", "no-cache");
+							},
+			success		: function (data) {
+								// Convert JSON object menjadi string
+								const jsonString = JSON.stringify(data, null, 2);
+
+								// Bungkus menjadi Blob
+								const blob = new Blob([jsonString], {
+									type: 'application/json;charset=utf-8'
+								});
+
+								// Buat URL sementara dari Blob
+								const url = URL.createObjectURL(blob);
+
+								// Buat elemen <a> untuk download
+								const a = document.createElement('a');
+								a.href = url;
+								a.download = 'game-config.json';
+
+								// Trigger download
+								document.body.appendChild(a);
+								a.click();
+
+								// Bersihkan elemen dan URL sementara
+								document.body.removeChild(a);
+								URL.revokeObjectURL(url);
+							},
+        error			: function (xhr, status, error) {
+								console.error('Download failed:', error);
+								console.error(xhr.responseText);
+
+								alert('Some error occurred while retrieving game config from server.');
+							}
+		});
+	});
 	
 });
 
