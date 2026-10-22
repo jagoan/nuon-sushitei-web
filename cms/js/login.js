@@ -59,6 +59,22 @@ $(document).ready(function() {
 			console.log( "Fail: " + JSON.stringify(msg.responseJSON) );
 		});		
 	});	
+
+	/***** TOGGLE PASSWORD VISIBILITY *****/
+	$('#togglePassword').on('click', function() {
+		const passwordInput = $('#inputPassword');
+		const passwordIcon  = $('#togglePasswordIcon');
+
+		if (passwordInput.attr('type') === 'password') {
+			passwordInput.attr('type', 'text');
+			passwordIcon.removeClass('bi-eye').addClass('bi-eye-slash');
+			$(this).attr('aria-label', 'Hide password');
+		} else {
+			passwordInput.attr('type', 'password');
+			passwordIcon.removeClass('bi-eye-slash').addClass('bi-eye');
+			$(this).attr('aria-label', 'Show password');
+		}
+	});
 	
 });
 
